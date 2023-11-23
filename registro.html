@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Asistencia</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        label {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px; 
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Registro de Asistencia de Estudiantes</h2>
+
+        <form id="registroForm">
+            <label for="idEstudiante">ID del Estudiante:</label>
+            <input type="text" id="idEstudiante" required>
+
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" required>
+
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" required>
+
+            <button type="button" onclick="registrarAsistencia()">Registrar Asistencia</button>
+            <button type="button" onclick="volverAlMenu()">Volver al Menú</button>
+        </form>
+    </div>
+
+    <script>
+        function registrarAsistencia() {
+            var idEstudiante = document.getElementById("idEstudiante").value;
+            var nombre = document.getElementById("nombre").value;
+            var fecha = document.getElementById("fecha").value;
+    
+            if (idEstudiante.trim() !== "" && nombre.trim() !== "" && fecha.trim() !== "") {
+                
+                var estudianteRegistrado = {
+                    idEstudiante: idEstudiante,
+                    nombre: nombre,
+                    fecha: fecha
+                };
+    
+          
+                guardarEstudianteRegistrado(estudianteRegistrado);
+    
+               
+                document.getElementById("idEstudiante").value = "";
+                document.getElementById("nombre").value = "";
+                document.getElementById("fecha").value = "";
+    
+              
+                alert("¡Asistencia registrada con éxito!");
+            } else {
+                alert("Por favor, ingresa un ID de estudiante, nombre y fecha válidos.");
+            }
+        }
+
+        function guardarEstudianteRegistrado(estudiante) {
+            var estudiantesRegistrados = JSON.parse(localStorage.getItem("estudiantesRegistrados")) || [];
+            estudiantesRegistrados.push(estudiante);
+            localStorage.setItem("estudiantesRegistrados", JSON.stringify(estudiantesRegistrados));
+        }
+
+        function volverAlMenu() {
+           
+            window.location.href = "menu.html";
+        }
+    </script>
+
+</body>
+</html>

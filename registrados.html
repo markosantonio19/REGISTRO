@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudiantes Registrados</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        .eliminar-btn {
+            background-color: #f44336;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .volver-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        p {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Estudiantes Registrados</h2>
+
+        <div id="estudiantesContainer">
+           
+        </div>
+
+        <button class="volver-btn" onclick="volverAlMenu()">Volver al Menú</button>
+    </div>
+
+    <script>
+       
+        var estudiantesRegistrados = JSON.parse(localStorage.getItem("estudiantesRegistrados")) || [];
+
+        
+        mostrarDatosEstudiantes();
+
+        function mostrarDatosEstudiantes() {
+            var estudiantesContainer = document.getElementById("estudiantesContainer");
+
+            if (estudiantesRegistrados.length > 0) {
+                var tablaEstudiantes = "<table>";
+                tablaEstudiantes += "<tr><th>ID</th><th>Nombre</th><th>Fecha</th><th>Acciones</th></tr>";
+
+                for (var i = 0; i < estudiantesRegistrados.length; i++) {
+                    tablaEstudiantes += "<tr><td>" + estudiantesRegistrados[i].idEstudiante + "</td>" +
+                                       "<td>" + estudiantesRegistrados[i].nombre + "</td>" +
+                                       "<td>" + estudiantesRegistrados[i].fecha + "</td>" +
+                                       "<td><button class='eliminar-btn' onclick='eliminarEstudiante(" + i + ")'>Eliminar</button></td></tr>";
+                }
+
+                tablaEstudiantes += "</table>";
+                estudiantesContainer.innerHTML = tablaEstudiantes;
+            } else {
+                estudiantesContainer.innerHTML = "<p>No hay estudiantes registrados.</p>";
+            }
+        }
+
+        function eliminarEstudiante(index) {
+            estudiantesRegistrados.splice(index, 1);
+            localStorage.setItem("estudiantesRegistrados", JSON.stringify(estudiantesRegistrados));
+            mostrarDatosEstudiantes();
+        }
+
+        function volverAlMenu() {
+            
+            window.location.href = "menu.html";
+        }
+    </script>
+
+</body>
+</html>
